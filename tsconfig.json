@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "jsx": "preserve",
+    "module": "esnext",
+    "target": "es6",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".", // This allows for relative imports from the root directory
+    "paths": {
+      "@/*": ["src/*"] // This maps the @ to the src folder, adjust if your folder structure is different
+    }
+  },
+  "include": ["client/**/*"],
+  "exclude": ["node_modules"]
+}

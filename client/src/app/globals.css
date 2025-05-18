@@ -1,0 +1,79 @@
+@import "tailwindcss";
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap");
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background-color: #0e1113;
+  color: white;
+}
+
+html,
+body {
+  @apply bg-[#0E1113];
+}
+
+.ripple {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: rgba(34, 178, 5, 0.2); /* soft green wave */
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: ripple-effect 0.6s ease-out;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes ripple-effect {
+  from {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.6;
+  }
+  to {
+    transform: translate(-50%, -50%) scale(3.5);
+    opacity: 0;
+  }
+}
+
+.post-hover-effect {
+  transition: all 0.3s ease-in-out;
+}
+
+.post-hover-effect:hover {
+  border: 2px solid #22B205; /* Neon Green border */
+  box-shadow: 0 0 20px rgba(34, 178, 5, 0.8), 0 0 40px rgba(34, 178, 5, 0.6); /* Neon Green mist */
+  transform: translateY(-5px); /* Optional: Slight lift effect */
+}
+
+.post-hover-effect a {
+  transition: color 0.3s ease-in-out; /* Smooth link color change on hover */
+}
+
+.post-hover-effect:hover a h2 {
+  color: #22B205; /* Neon green text color on hover */
+}
+

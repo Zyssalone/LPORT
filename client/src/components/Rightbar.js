@@ -28,7 +28,7 @@ export default function Rightbar() {
       try {
         console.log("Fetching friends with token:", token); // Debug token
         const response = await fetch(
-          "http://localhost:5000/api/users/friends",
+          `http://localhost:5000/api/users/friends?=${userId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -133,7 +133,7 @@ export default function Rightbar() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (!newMessage.trim() || !ws || !selectedFriend) return;
 
     try {
@@ -153,7 +153,31 @@ export default function Rightbar() {
         },
       ]);
 
-      setNewMessage("");
+    setNewMessage("");
+
+    const response = await fetch(
+      `http://localhost:5000/api/chat/send`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          senderId: userId,
+          recipientId: selectedFriend,
+          content: newMessage,
+          timestamp: new Date().toISOString(),
+        }),
+      }
+    );
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to send message");
+    }
+    const data = await response.json();
+    console.log("Message sent:", data);
+    
     } catch (err) {
       console.error("Error sending message:", err);
       setError("Failed to send message");

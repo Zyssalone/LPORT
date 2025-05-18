@@ -70,18 +70,18 @@ router.get('/me', verifyToken, async (req, res) => {
   }
 });
 
-// Get a user by their userId
-router.get('/:userId', async (req, res) => {
-  try {
-    const { userId } = req.params;  // Grab userId from the URL params
-    const user = await User.findOne({ userId }).select('-password');  // Search user by userId
-    if (!user) return res.status(404).json({ message: 'User not found' });
-    res.status(200).json(user);  // Return the user data
-  } catch (err) {
-    console.error('Error fetching user:', err);
-    res.status(500).json({ message: 'Server error' });
-  }
-});
+// // Get a user by their userId
+// router.get('/:userId', async (req, res) => {
+//   try {
+//     const { userId } = req.params;  // Grab userId from the URL params
+//     const user = await User.findOne({ userId }).select('-password');  // Search user by userId
+//     if (!user) return res.status(404).json({ message: 'User not found' });
+//     res.status(200).json(user);  // Return the user data
+//   } catch (err) {
+//     console.error('Error fetching user:', err);
+//     res.status(500).json({ message: 'Server error' });
+//   }
+// });
 
 // Route to follow a user
 router.post('/follow', verifyToken, async (req, res) => {
@@ -100,7 +100,7 @@ router.post('/follow', verifyToken, async (req, res) => {
     ]);
 
     if (!follower || !followee) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: 'User nost found' });
     }
 
     if (follower.following.includes(followeeId)) {
@@ -143,7 +143,7 @@ router.post('/unfollow', verifyToken, async (req, res) => {
     const followee = await User.findOne({ userId: followeeId });
 
     if (!follower || !followee) {
-      return res.status(404).json({ message: 'User not found.' });
+      return res.status(404).json({ message: 'User nost found.' });
     }
 
     if (!follower.following.includes(followeeId)) {
@@ -180,7 +180,7 @@ router.post('/add-friend', verifyToken, async (req, res) => {
     const user2 = await User.findOne({ userId: userId2 });
 
     if (!user1 || !user2) {
-      return res.status(404).json({ message: 'User not found.' });
+      return res.status(404).json({ message: 'User nost found.' });
     }
 
     // Check if both users follow each other
@@ -216,7 +216,7 @@ router.post('/remove-friend', verifyToken, async (req, res) => {
     const user2 = await User.findOne({ userId: userId2 });
 
     if (!user1 || !user2) {
-      return res.status(404).json({ message: 'User not found.' });
+      return res.status(404).json({ message: 'User nost found.' });
     }
 
     // Remove each other from the friends list
@@ -234,9 +234,8 @@ router.post('/remove-friend', verifyToken, async (req, res) => {
 
 router.get('/friends', verifyToken, async (req, res) => {
   try {
-    const user = await User.findOne({ 
-      userId: { $regex: new RegExp(`^${req.user.userId}$`, 'i') } // Case-insensitive
-    });
+    const user = await User.findOne({ userId: req.user.userId }).select('-password');
+
     if (!user) {
       console.error("User not found. Query:", { userId: req.user.userId });
       return res.status(404).json({ message: 'User not found' });

@@ -14,6 +14,7 @@ const authRoutes = require("./routes/authRoutes");
 const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const userRoutes = require('./routes/userRoutes');
+const announcementRoutes = require('./routes/announcementRoutes');
 const chatRoutes = require('./routes/chatRoutes');
 
 // Middleware
@@ -28,7 +29,6 @@ app.use("/api/auth", authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/chat', chatRoutes);
 
 // Test route
 app.get("/", (req, res) => res.send("API is working"));

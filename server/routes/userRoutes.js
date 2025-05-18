@@ -261,3 +261,37 @@ router.get('/chat/:friendId', verifyToken, async (req, res) => {
 });
 
 module.exports = router;
+
+router.patch('/update-status', verifyToken, async (req, res) => {
+  try {
+    const { status } = req.body;
+    
+    // Validate status length
+    if (!status || status.trim().length === 0) {
+      return res.status(400).json({ message: 'Status cannot be empty' });
+    }
+    
+    if (status.length > 150) {
+      return res.status(400).json({ message: 'Status must be 150 characters or less' });
+    }
+
+    // Update user status
+    const updatedUser = await User.findOneAndUpdate(
+      { userId: req.user.userId },
+      { status: status.trim() },
+      { new: true, select: '-password' }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ 
+      message: 'Status updated successfully',
+      status: updatedUser.status
+    });
+  } catch (error) {
+    console.error('Status update error:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});

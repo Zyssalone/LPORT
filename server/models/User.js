@@ -31,6 +31,12 @@ const userSchema = new mongoose.Schema({
     default: 'Newbie',
   },
 
+  // Admin field
+  admin: {
+    type: Boolean,
+    default: false,
+  },
+
   // Friendships and relationships
   friends: {
     type: [String], // Array of userIds (friends are mutual)

@@ -14,6 +14,7 @@ const authRoutes = require("./routes/authRoutes");
 const postRoutes = require('./routes/postRoutes');
 const commentRoutes = require('./routes/commentRoutes');
 const userRoutes = require('./routes/userRoutes');
+const announcementRoutes = require('./routes/announcementRoutes');
 
 // Middleware
 app.use(cors());
@@ -27,6 +28,7 @@ app.use("/api/auth", authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/announcements', announcementRoutes);
 
 // Test route
 app.get("/", (req, res) => res.send("API is working"));

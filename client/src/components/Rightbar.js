@@ -104,9 +104,13 @@ export default function Rightbar() {
       setError(null);
       try {
         const response = await fetch(
-          `http://localhost:5000/api/users/chat/${selectedFriend}`,
+          `http://localhost:5000/api/chat/gethistory?recipientId=${selectedFriend}&userId=${userId}`,
           {
-            headers: { Authorization: `Bearer ${token}` },
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
 
@@ -115,7 +119,8 @@ export default function Rightbar() {
         }
 
         const data = await response.json();
-        setMessages(Array.isArray(data) ? data : []);
+        setMessages([data]);
+
       } catch (err) {
         console.error("Error fetching messages:", err);
         setError("Failed to load messages");

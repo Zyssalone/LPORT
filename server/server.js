@@ -29,6 +29,7 @@ app.use("/api/auth", authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/chat', chatRoutes);
 
 // Test route
 app.get("/", (req, res) => res.send("API is working"));
